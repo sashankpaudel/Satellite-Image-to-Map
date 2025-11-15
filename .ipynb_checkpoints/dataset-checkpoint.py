@@ -7,6 +7,7 @@ from torchvision.utils import save_image
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
+############## Augmentations ###############
 both_transform = A.Compose(
     [A.Resize(width=256, height=256),], additional_targets={"image0": "image"},
 )
@@ -59,7 +60,14 @@ class Satellite2Map_Data(Dataset):
 
             satellite_image = transform_only_input(image=input_image)["image"]
             map_image = transform_only_mask(image=target_image)["image"]
-            
+            # PIL_image = Image.fromarray(numpy_image.astype('uint8'), 'RGB')
+            # satellite_image = Image.fromarray(satellite_image.astype('uint8'),'RGB')
+            # map_image = Image.fromarray(map_image.astype('uint8'),'RGB')
+
+            # if self.transform!=None:
+            #     satellite_image = self.transform(satellite_image)
+            #     map_image = self.transform(map_image)
+
             return (satellite_image, map_image)
         except:
             if torch.is_tensor(idx):
