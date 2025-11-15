@@ -1,9 +1,14 @@
-def name_callback(name):
-    if name == b"Shashikant Prasad":
-        return b"Sashank Paudel"
-    return name
+from git_filter_repo import FilterRepo
 
-def email_callback(email):
-    if email == b"shashikantprasad1111@gmail.com":
-        return b"sashankpaudel07@gmail.com"
-    return email
+def rewrite(repo):
+    for commit in repo.commits:
+        if commit.author_email == b"shashikantprasad1111@gmail.com":
+            commit.author_name = b"Sashank Paudel"
+            commit.author_email = b"sashankpaudel07@gmail.com"
+        if commit.committer_email == b"shashikantprasad1111@gmail.com":
+            commit.committer_name = b"Sashank Paudel"
+            commit.committer_email = b"sashankpaudel07@gmail.com"
+
+repo = FilterRepo()
+rewrite(repo)
+repo.apply()
